@@ -8,9 +8,9 @@ contract Erc20Main is StandardToken {
   uint8 public exponent;
   uint32 public slope;
   uint256 public poolBalance;
+  bool public finalized;
+  string public memehash;
   bool inited;
-  bool finalized;
-  string memehash;
 
   // struct Multihash {
   //   bytes32 hash;
@@ -21,6 +21,7 @@ contract Erc20Main is StandardToken {
   event Mint(address indexed to, uint256 amount, uint256 totalCost);
   event Burn(address indexed burner, uint256 amount, uint256 reward);
   event Inited(string __memehash);
+  event Finalized();
 
   using SafeMath for uint256;
 
@@ -41,47 +42,66 @@ contract Erc20Main is StandardToken {
     Inited(memehash);
   }
 
+  function setSlope(uint32 _slope) public returns (bool) {
+    require(!finalized);
+    slope = _slope;
+    return true;
+  }
+
+  function setExponent(uint8 _exponent) public returns (bool) {
+    require(!finalized);
+    exponent = _exponent;
+    return true;
+  }
+
+  function finalize() public returns (bool) {
+    require(!finalized);
+    finalized = true;
+    Finalized();
+    return true;
+  }
+
   function curveIntegral(uint256 t) internal returns (uint256) {
-      uint256 nexp = exponent + 1;
-      return (t ** nexp).div(nexp).div(slope);
+    uint256 nexp = exponent + 1;
+    return (t ** nexp).div(nexp).div(slope);
   }
 
   function priceToMint(uint256 numTokens) public returns(uint256) {
-      return curveIntegral(totalSupply_.add(numTokens)).sub(poolBalance);
+    return curveIntegral(totalSupply_.add(numTokens)).sub(poolBalance);
   }
 
   function rewardForBurn(uint256 numTokens) public returns(uint256) {
-      return poolBalance.sub(curveIntegral(totalSupply_.sub(numTokens)));
+    return poolBalance.sub(curveIntegral(totalSupply_.sub(numTokens)));
   }
 
   /// @dev                Mint new tokens with ether
   /// @param numTokens    The number of tokens you want to mint
   function mint(uint256 numTokens) public payable {
-      uint256 priceForTokens = priceToMint(numTokens);
-      require(msg.value >= priceForTokens);
+    uint256 priceForTokens = priceToMint(numTokens);
+    require(msg.value >= priceForTokens);
 
-      totalSupply_ = totalSupply_.add(numTokens);
-      balances[msg.sender] = balances[msg.sender].add(numTokens);
-      poolBalance = poolBalance.add(priceForTokens);
-      if (msg.value > priceForTokens) {
-          msg.sender.transfer(msg.value - priceForTokens);
-      }
+    totalSupply_ = totalSupply_.add(numTokens);
+    balances[msg.sender] = balances[msg.sender].add(numTokens);
+    poolBalance = poolBalance.add(priceForTokens);
+    if (msg.value > priceForTokens) {
+        msg.sender.transfer(msg.value - priceForTokens);
+    }
 
-      emit Mint(msg.sender, numTokens, priceForTokens);
+    emit Mint(msg.sender, numTokens, priceForTokens);
   }
 
   /// @dev                Burn tokens to receive ether
   /// @param numTokens    The number of tokens that you want to burn
   function burn(uint256 numTokens) public {
-      require(balances[msg.sender] >= numTokens);
+    require(balances[msg.sender] >= numTokens);
 
-      uint256 ethToReturn = rewardForBurn(numTokens);
-      totalSupply_ = totalSupply_.sub(numTokens);
-      balances[msg.sender] = balances[msg.sender].sub(numTokens);
-      poolBalance = poolBalance.sub(ethToReturn);
-      msg.sender.transfer(ethToReturn);
+    uint256 ethToReturn = rewardForBurn(numTokens);
+    totalSupply_ = totalSupply_.sub(numTokens);
+    balances[msg.sender] = balances[msg.sender].sub(numTokens);
+    poolBalance = poolBalance.sub(ethToReturn);
+    msg.sender.transfer(ethToReturn);
 
-      emit Burn(msg.sender, numTokens, ethToReturn);
+    emit Burn(msg.sender, numTokens, ethToReturn);
   }
 
 }
