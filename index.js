@@ -1,5 +1,7 @@
 var Sample = require('./build/contracts/Sample.json')
+var Erc20Main = require('./build/contracts/Erc20Main.json')
 
 module.exports = {
-  Sample: Sample
+  Sample: Sample,
+  Erc20Main: Erc20Main
 }
