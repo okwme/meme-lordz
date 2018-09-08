@@ -9,8 +9,6 @@ module.exports = (deployer, helper, accounts) => {
       await deployer.deploy(Controller)
       const controller = await Controller.deployed()
       console.log(_ + 'Controller deployed at: ' + controller.address)
-      
-      
 
       await deployer.deploy(ControllerPointer, controller.address)
       const controllerPointer = await ControllerPointer.deployed()

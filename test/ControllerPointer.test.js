@@ -8,36 +8,35 @@ let _ = '        '
 
 contract('ControllerPointer', async function(accounts) {
   let controllerPointer, controller
+  before(done => {
+    ;(async () => {
+      try {
+        var totalGas = new web3.BigNumber(0)
 
+        // Deploy Controller.sol
+        controller = await Controller.new()
+        var tx = web3.eth.getTransactionReceipt(controller.transactionHash)
+        totalGas = totalGas.plus(tx.gasUsed)
+        console.log(_ + tx.gasUsed + ' - Deploy controller')
+
+        // Deploy ControllerPointer.sol
+        controllerPointer = await ControllerPointer.new(controller.address)
+        var tx = web3.eth.getTransactionReceipt(
+          controllerPointer.transactionHash
+        )
+        totalGas = totalGas.plus(tx.gasUsed)
+        console.log(_ + tx.gasUsed + ' - Deploy controllerPointer')
+
+        console.log(_ + '-----------------------')
+        console.log(_ + totalGas.toFormat(0) + ' - Total Gas')
+        done()
+      } catch (error) {
+        console.error(error)
+        done(false)
+      }
+    })()
+  })
   describe('ControllerPointer.sol', function() {
-    before(done => {
-      ;(async () => {
-        try {
-          var totalGas = new web3.BigNumber(0)
-
-          // Deploy Controller.sol
-          controller = await Controller.new()
-          var tx = web3.eth.getTransactionReceipt(controller.transactionHash)
-          totalGas = totalGas.plus(tx.gasUsed)
-          console.log(_ + tx.gasUsed + ' - Deploy controller')
-
-          // Deploy ControllerPointer.sol
-          controllerPointer = await ControllerPointer.new(controller.address)
-          var tx = web3.eth.getTransactionReceipt(
-            controllerPointer.transactionHash
-          )
-          totalGas = totalGas.plus(tx.gasUsed)
-          console.log(_ + tx.gasUsed + ' - Deploy controllerPointer')
-
-          console.log(_ + '-----------------------')
-          console.log(_ + totalGas.toFormat(0) + ' - Total Gas')
-          done()
-        } catch (error) {
-          console.error(error)
-          done(false)
-        }
-      })()
-    })
     it('getController should return controller', async function() {
       let controllerAddress = await controllerPointer.getController()
       assert(
