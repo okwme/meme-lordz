@@ -19,19 +19,9 @@ contract('ProxyFactory', async function(accounts) {
       try {
         var totalGas = new web3.BigNumber(0)
 
-        // Deploy Erc20Main.sol
-        erc20Main = await Erc20Main.new()
-        var tx = web3.eth.getTransactionReceipt(erc20Main.transactionHash)
-        totalGas = totalGas.plus(tx.gasUsed)
-        console.log(_ + tx.gasUsed + ' - Deploy erc20Main')
-        erc20Main = await Erc20Main.deployed()
-
-        // Deploy ProxyFactory.sol
-        proxyFactory = await ProxyFactory.new()
-        var tx = web3.eth.getTransactionReceipt(proxyFactory.transactionHash)
-        totalGas = totalGas.plus(tx.gasUsed)
-        console.log(_ + tx.gasUsed + ' - Deploy proxyFactory')
-        proxyFactory = await ProxyFactory.deployed()
+        console.log('In ProxyFactory tests')
+        var nonce = await web3.eth.getTransactionCount(web3.eth.accounts[0]);
+        console.log('Nonce is ' + nonce)
 
         console.log(_ + '-----------------------')
         console.log(_ + totalGas.toFormat(0) + ' - Total Gas')
