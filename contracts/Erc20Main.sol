@@ -2,7 +2,7 @@ import "zeppelin-solidity/contracts/token/ERC20/StandardToken.sol";
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
 import "ControllerI.sol"
 import "ControllerPointer.sol"
-contract Erc20Main is StandardToken {
+contract ERC0Main is StandardToken {
 
     bool inited;
     bool public finalized;
@@ -23,6 +23,11 @@ contract Erc20Main is StandardToken {
         uint8 hashFunction;
         uint8 size;
         bytes32 memehash;
+    }
+
+    modifier onlyController() {
+        require(msg.sender == ControllerPointer.getController());
+        _;
     }
 
     event Mint(address indexed to, uint256 amount, uint256 totalCost);
@@ -94,34 +99,28 @@ contract Erc20Main is StandardToken {
     return true;
   }
 
-  function curveIntegral(uint256 t) internal returns (uint256) {
-    uint256 nexp = exponent + 1;
-    return (t ** nexp).div(nexp).div(slope);
-  }
-
-  function priceToMint(uint256 numTokens) public returns(uint256) {
-    return curveIntegral(totalSupply_.add(numTokens)).sub(poolBalance);
-  }
-
-  function rewardForBurn(uint256 numTokens) public returns(uint256) {
-    return poolBalance.sub(curveIntegral(totalSupply_.sub(numTokens)));
-  }
 
   /// @dev                Mint new tokens with ether
   /// @param numTokens    The number of tokens you want to mint
-  function mint(address minter, uint256 numTokens) public onlyController {
+  function mint(address minter, uint256 numTokens) public onlyController returns(bool){
     totalSupply_ = totalSupply_.add(numTokens);
     balances[minter] = balances[minter].add(numTokens);
     emit Mint(minter, numTokens);
+    return true;
   }
 
   /// @dev                Burn tokens to receive ether
   /// @param burner         The number of tokens that you want to burn
   /// @param numTokens    The number of tokens that you want to burn
-  function burn(address burner, uint256 numTokens) public {
+  function burn(address burner, uint256 numTokens) public onlyController {
     totalSupply_ = totalSupply_.sub(numTokens);
     balances[burner] = balances[burner].sub(numTokens);
     emit Burn(burner, numTokens);
   }
+
+  function setPoolBalance(uint256 _poolBalance) public onlyController {
+      poolBalance = _poolBalance;
+  }
+  /* function getPoolBalance() TODO: if needed  */
 
 }
