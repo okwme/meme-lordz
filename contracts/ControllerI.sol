@@ -5,7 +5,6 @@ contract ControllerI {
         string _symbol,
         uint8 hash_function,
         uint8 size,
-        bytes32 _memehash,
-        uint256 numTokens
+        bytes32 _memehash
     ) public payable returns (bool);
 }

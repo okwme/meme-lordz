@@ -33,13 +33,14 @@ contract ERC20Main is StandardToken {
 
     using SafeMath for uint256;
 
+    function() payable {}
+
     function initMeme(
         string _name,
         string _symbol,
         uint8 _hashFunction,
         uint8 _size,
-        bytes32 _memehash,
-        uint256 numTokens
+        bytes32 _memehash
     ) public payable {
 
         require(!inited);
@@ -62,8 +63,7 @@ contract ERC20Main is StandardToken {
                 _symbol,
                 _hashFunction,
                 _size,
-                _memehash,
-                numTokens
+                _memehash
             )
         );
         emit Inited(_memehash);
