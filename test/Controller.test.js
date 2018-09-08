@@ -3,17 +3,13 @@ var Controller = artifacts.require('./Controller.sol')
 var ControllerPointer = artifacts.require('./ControllerPointer.sol')
 var ERC20Main = artifacts.require('./ERC20Main.sol')
 
-const {
-  getReceipt,
-  sendTransaction
-} = require('../helpers/main.js')
+const { getReceipt, sendTransaction } = require('../helpers/main.js')
 
 var {
   reserveRatio,
   virtualSupply,
   virtualBalance
 } = require('../helpers/utils')
-
 
 let ONEGWEI = 1000000000 // 1GWEI
 
@@ -201,6 +197,13 @@ contract('Controller.sol', async function(accounts) {
         console.log('error', error)
         assert(false, 'priceToMint should not have failed')
       }
+    })
+
+    it('should sell some tokens for ETH', async function() {
+      const self = accounts[0]
+      let ethBalanceBefore = await web3.eth.getBalance(self)
+      let tokensBefore = await eRC20Main.balanceOf(self)
+      var tx = await controller.sell
     })
   })
 })
