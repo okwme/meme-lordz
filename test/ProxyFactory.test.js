@@ -80,10 +80,7 @@ contract('ProxyFactory', async function(accounts) {
 
     it('should should not throw allow initMeme to be called again', async function() {
       var erc20Instance = Erc20Main.at(proxyAddress);
-      // var inited = await erc20Instance.initMeme(name, symbol, hashFunction, size, memehash, 0);
       await testWillThrow(erc20Instance.initMeme, [name, symbol, hashFunction, size, memehash, 0])
-      // assert.throws(erc20Instance.initMeme(name, symbol, hashFunction, size, memehash, 0),
-      //  'initMeme cannot be called twice')
     })
   })
 })
