@@ -18,8 +18,10 @@
     "dotenv": "^5.0.1",
     "ethjs-abi": "^0.2.1",
     "ganache-cli": "^6.1.8",
+    "mocha": "^5.2.0",
     "solium": "^1.1.7",
     "truffle-hdwallet-provider": "^0.0.5",
+    "web3": "^1.0.0-beta.36",
     "web3-utils": "^1.0.0-beta.34",
     "zeppelin-solidity": "^1.9.0"
   },

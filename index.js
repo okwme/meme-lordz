@@ -1,5 +1,5 @@
-var Sample = require('./build/contracts/Sample.json')
-var Erc20Main = require('./build/contracts/ERC20Main.json')
+var Sample = require('./_build/contracts/Sample.json')
+var Erc20Main = require('./_build/contracts/ERC20Main.json')
 
 module.exports = {
   Sample: Sample,
