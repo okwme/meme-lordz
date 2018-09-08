@@ -18,14 +18,14 @@
     "absolutePath": "/media/000/Documents/meme-lordz/contracts/Sample.sol",
     "exportedSymbols": {
       "Sample": [
-        200
+        516
       ]
     },
-    "id": 201,
+    "id": 517,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 195,
+        "id": 511,
         "literals": [
           "solidity",
           "^",
@@ -41,22 +41,22 @@
         "contractKind": "contract",
         "documentation": "The Sample contract does this and that...",
         "fullyImplemented": true,
-        "id": 200,
+        "id": 516,
         "linearizedBaseContracts": [
-          200
+          516
         ],
         "name": "Sample",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 198,
+              "id": 514,
               "nodeType": "Block",
               "src": "123:2:3",
               "statements": []
             },
             "documentation": null,
-            "id": 199,
+            "id": 515,
             "implemented": true,
             "isConstructor": true,
             "isDeclaredConst": false,
@@ -64,26 +64,26 @@
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 196,
+              "id": 512,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "113:2:3"
             },
             "payable": false,
             "returnParameters": {
-              "id": 197,
+              "id": 513,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "123:0:3"
             },
-            "scope": 200,
+            "scope": 516,
             "src": "101:24:3",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 201,
+        "scope": 517,
         "src": "79:50:3"
       }
     ],
@@ -93,14 +93,14 @@
     "absolutePath": "/media/000/Documents/meme-lordz/contracts/Sample.sol",
     "exportedSymbols": {
       "Sample": [
-        200
+        516
       ]
     },
-    "id": 201,
+    "id": 517,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 195,
+        "id": 511,
         "literals": [
           "solidity",
           "^",
@@ -116,22 +116,22 @@
         "contractKind": "contract",
         "documentation": "The Sample contract does this and that...",
         "fullyImplemented": true,
-        "id": 200,
+        "id": 516,
         "linearizedBaseContracts": [
-          200
+          516
         ],
         "name": "Sample",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 198,
+              "id": 514,
               "nodeType": "Block",
               "src": "123:2:3",
               "statements": []
             },
             "documentation": null,
-            "id": 199,
+            "id": 515,
             "implemented": true,
             "isConstructor": true,
             "isDeclaredConst": false,
@@ -139,26 +139,26 @@
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 196,
+              "id": 512,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "113:2:3"
             },
             "payable": false,
             "returnParameters": {
-              "id": 197,
+              "id": 513,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "123:0:3"
             },
-            "scope": 200,
+            "scope": 516,
             "src": "101:24:3",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 201,
+        "scope": 517,
         "src": "79:50:3"
       }
     ],
@@ -168,14 +168,7 @@
     "name": "solc",
     "version": "0.4.24+commit.e67f0147.Emscripten.clang"
   },
-  "networks": {
-    "4447": {
-      "events": {},
-      "links": {},
-      "address": "0xf204a4ef082f5c04bb89f7d5e6568b796096735a",
-      "transactionHash": "0x2151ea2f758b0a3e3bd12c3d8ce330656c7a7ac42484d23aba822d0d27c63f1a"
-    }
-  },
+  "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-09-07T22:46:09.903Z"
+  "updatedAt": "2018-09-08T00:57:58.392Z"
 }

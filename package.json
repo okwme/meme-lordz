@@ -16,6 +16,7 @@
   "devDependencies": {},
   "dependencies": {
     "dotenv": "^5.0.1",
+    "ethjs-abi": "^0.2.1",
     "solium": "^1.1.7",
     "truffle-hdwallet-provider": "^0.0.5",
     "web3-utils": "^1.0.0-beta.34",

@@ -1,24 +1,24 @@
 var utils = require('web3-utils')
-var Sample = artifacts.require('./Sample.sol')
+var Erc20Main = artifacts.require('./Erc20Main.sol')
 
 let gasPrice = 1000000000 // 1GWEI
 
 let _ = '        '
 
-contract('Sample', async function(accounts) {
-  let sample
+contract('Erc20Main', async function(accounts) {
+  let erc20Main;
 
   before(done => {
     ;(async () => {
       try {
         var totalGas = new web3.BigNumber(0)
 
-        // Deploy Sample.sol
-        sample = await Sample.new()
-        var tx = web3.eth.getTransactionReceipt(sample.transactionHash)
+        // Deploy Erc20Main.sol
+        erc20Main = await Erc20Main.new()
+        var tx = web3.eth.getTransactionReceipt(erc20Main.transactionHash)
         totalGas = totalGas.plus(tx.gasUsed)
-        console.log(_ + tx.gasUsed + ' - Deploy sample')
-        sample = await Sample.deployed()
+        console.log(_ + tx.gasUsed + ' - Deploy erc20Main')
+        erc20Main = await Erc20Main.deployed()
 
         console.log(_ + '-----------------------')
         console.log(_ + totalGas.toFormat(0) + ' - Total Gas')

@@ -25,11 +25,12 @@ contract Erc20Main is StandardToken {
 
   using SafeMath for uint256;
 
-  function initToken(
+  function initMeme(
     string _name,
     string _symbol,
     string _memehash
-  ) public {
+  ) public 
+    payable {
     require(!inited);
     require(poolBalance == 0 && totalSupply_ == 0);
     name = _name;
