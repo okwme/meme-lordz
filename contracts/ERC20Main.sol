@@ -10,7 +10,6 @@ contract ERC20Main is StandardToken {
     uint256 public poolBalance;
 
     ControllerI public controller;
-    address public controllerPointerAddress; 
 
     Multihash public memehash;
 
@@ -54,8 +53,6 @@ contract ERC20Main is StandardToken {
         memehash.hashFunction = _hashFunction;
         memehash.size = _size;
         memehash.memehash = _memehash;
-
-        controllerPointerAddress = _controllerPointerAddress;
 
         require(
             ControllerI(ControllerPointer(0x2Ec49b0c81BfD28742bF7BECd9BB8B52f85111d2).getController()).initMeme.value(msg.value)(
