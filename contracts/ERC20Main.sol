@@ -3,7 +3,7 @@ import "zeppelin-solidity/contracts/math/SafeMath.sol";
 import "./ControllerI.sol";
 import "./ControllerPointer.sol";
 
-contract ERC0Main is StandardToken {
+contract ERC20Main is StandardToken {
 
     bool inited;
     bool public finalized;

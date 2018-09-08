@@ -1,7 +1,7 @@
 var utils = require('web3-utils')
 var ethjs = require('ethjs-abi');
 var ProxyFactory = artifacts.require('./ProxyFactory.sol')
-var Erc20Main = artifacts.require('./Erc20Main.sol')
+var Erc20Main = artifacts.require('./ERC20Main.sol')
 
 let gasPrice = 1000000000 // 1GWEI
 
@@ -45,7 +45,6 @@ contract('ProxyFactory', async function(accounts) {
 
   describe('ProxyFactory.sol', function() {
     it('should create a contract', async function() {
-      //hard coded because I forget Billy's abi secrets
       const initMeme = {
         "constant": false,
         "inputs": [

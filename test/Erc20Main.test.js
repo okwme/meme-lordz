@@ -1,5 +1,5 @@
 var utils = require('web3-utils')
-var Erc20Main = artifacts.require('./Erc20Main.sol')
+var Erc20Main = artifacts.require('./ERC20Main.sol')
 
 let gasPrice = 1000000000 // 1GWEI
 
