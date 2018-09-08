@@ -8,24 +8,24 @@
       "type": "constructor"
     }
   ],
-  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a723058204ab10a2a1a40b02940c7eca9fd1b881c5c1fa15fffd64a8e292fc124635abcdf0029",
-  "deployedBytecode": "0x6080604052600080fd00a165627a7a723058204ab10a2a1a40b02940c7eca9fd1b881c5c1fa15fffd64a8e292fc124635abcdf0029",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a7230582031963488d7ccae3cf9296ec6fe8f47617cc27ac3bcbf77270fa17f854f9ff5ce0029",
+  "deployedBytecode": "0x6080604052600080fd00a165627a7a7230582031963488d7ccae3cf9296ec6fe8f47617cc27ac3bcbf77270fa17f854f9ff5ce0029",
   "sourceMap": "79:50:7:-;;;101:24;8:9:-1;5:2;;;30:1;27;20:12;5:2;101:24:7;79:50;;;;;;",
   "deployedSourceMap": "79:50:7:-;;;;;",
   "source": "pragma solidity ^0.4.23;\n\n/**\n * The Sample contract does this and that...\n */\ncontract Sample {\n    constructor () public {}  \n}\n",
-  "sourcePath": "/media/000/Documents/meme-lordz/contracts/Sample.sol",
+  "sourcePath": "/Users/billy/sol/meme-lordz/contracts/Sample.sol",
   "ast": {
-    "absolutePath": "/media/000/Documents/meme-lordz/contracts/Sample.sol",
+    "absolutePath": "/Users/billy/sol/meme-lordz/contracts/Sample.sol",
     "exportedSymbols": {
       "Sample": [
-        979
+        1025
       ]
     },
-    "id": 980,
+    "id": 1026,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 974,
+        "id": 1020,
         "literals": [
           "solidity",
           "^",
@@ -41,22 +41,22 @@
         "contractKind": "contract",
         "documentation": "The Sample contract does this and that...",
         "fullyImplemented": true,
-        "id": 979,
+        "id": 1025,
         "linearizedBaseContracts": [
-          979
+          1025
         ],
         "name": "Sample",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 977,
+              "id": 1023,
               "nodeType": "Block",
               "src": "123:2:7",
               "statements": []
             },
             "documentation": null,
-            "id": 978,
+            "id": 1024,
             "implemented": true,
             "isConstructor": true,
             "isDeclaredConst": false,
@@ -64,43 +64,43 @@
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 975,
+              "id": 1021,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "113:2:7"
             },
             "payable": false,
             "returnParameters": {
-              "id": 976,
+              "id": 1022,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "123:0:7"
             },
-            "scope": 979,
+            "scope": 1025,
             "src": "101:24:7",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 980,
+        "scope": 1026,
         "src": "79:50:7"
       }
     ],
     "src": "0:130:7"
   },
   "legacyAST": {
-    "absolutePath": "/media/000/Documents/meme-lordz/contracts/Sample.sol",
+    "absolutePath": "/Users/billy/sol/meme-lordz/contracts/Sample.sol",
     "exportedSymbols": {
       "Sample": [
-        979
+        1025
       ]
     },
-    "id": 980,
+    "id": 1026,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 974,
+        "id": 1020,
         "literals": [
           "solidity",
           "^",
@@ -116,22 +116,22 @@
         "contractKind": "contract",
         "documentation": "The Sample contract does this and that...",
         "fullyImplemented": true,
-        "id": 979,
+        "id": 1025,
         "linearizedBaseContracts": [
-          979
+          1025
         ],
         "name": "Sample",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 977,
+              "id": 1023,
               "nodeType": "Block",
               "src": "123:2:7",
               "statements": []
             },
             "documentation": null,
-            "id": 978,
+            "id": 1024,
             "implemented": true,
             "isConstructor": true,
             "isDeclaredConst": false,
@@ -139,26 +139,26 @@
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 975,
+              "id": 1021,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "113:2:7"
             },
             "payable": false,
             "returnParameters": {
-              "id": 976,
+              "id": 1022,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "123:0:7"
             },
-            "scope": 979,
+            "scope": 1025,
             "src": "101:24:7",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 980,
+        "scope": 1026,
         "src": "79:50:7"
       }
     ],
@@ -170,5 +170,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-09-08T13:09:24.351Z"
+  "updatedAt": "2018-09-08T14:05:40.746Z"
 }
