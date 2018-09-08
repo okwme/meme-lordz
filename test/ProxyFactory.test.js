@@ -3,7 +3,8 @@ var ethjs = require('ethjs-abi')
 var ProxyFactory = artifacts.require('./ProxyFactory.sol')
 var Erc20Main = artifacts.require('./ERC20Main.sol')
 const {
-  testWillThrow
+  testWillThrow,
+  getCodeAsync
 } = require('../helpers/main.js')
 
 let gasPrice = 1000000000 // 1GWEI
@@ -86,6 +87,12 @@ contract('ProxyFactory', async function(accounts) {
       var erc20Instance = Erc20Main.at(proxyAddress);
       const _memehash = await erc20Instance.memehash();
       console.log(`memehash ${_memehash}`);
+    })
+
+    it('should have code', async function() {
+      var erc20Instance = Erc20Main.at(proxyAddress);
+      const code = await getCodeAsync(proxyAddress);
+      console.log(`code ${code}`);
     })
 
     it('should have a token balance at the creators address', async function() {
