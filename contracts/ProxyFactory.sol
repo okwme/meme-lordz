@@ -30,31 +30,28 @@
 
 pragma solidity ^0.4.19;
 
+import './ControllerPointer.sol';
+
 /* solhint-disable no-inline-assembly, indent, state-visibility, avoid-low-level-calls */
 
 contract ProxyFactory {
-    event ProxyDeployed(address proxyAddress, address targetAddress);
-    event ProxiesDeployed(address[] proxyAddresses, address targetAddress);
+    address public target;
 
-    function createManyProxies(uint256 _count, address _target, bytes _data)
-        public
-    {
-        address[] memory proxyAddresses = new address[](_count);
-
-        for (uint256 i = 0; i < _count; ++i) {
-            proxyAddresses[i] = createProxyImpl(_target, _data);
-        }
-
-        ProxiesDeployed(proxyAddresses, _target);
+    constructor(address _target) public {
+      target = _target;
     }
 
-    function createProxy(address _target, bytes _data)
+    event ProxyDeployed(address proxyAddress, address targetAddress);
+
+    function createProxy(bytes _data)
         public
+        payable
         returns (address proxyContract)
     {
+        address _target = ControllerPointer(target).getERC20Main();
         proxyContract = createProxyImpl(_target, _data);
 
-        ProxyDeployed(proxyContract, _target);
+        emit ProxyDeployed(proxyContract, _target);
     }
 
     function createProxyImpl(address _target, bytes _data)

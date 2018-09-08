@@ -1,7 +1,8 @@
 import "zeppelin-solidity/contracts/token/ERC20/StandardToken.sol";
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
-import "ControllerI.sol"
-import "ControllerPointer.sol"
+import "./ControllerI.sol";
+import "./ControllerPointer.sol";
+
 contract ERC0Main is StandardToken {
 
     bool inited;
@@ -12,7 +13,7 @@ contract ERC0Main is StandardToken {
     uint32 public slope;
     uint256 public poolBalance;
     ControllerI public controller;
-    ControllerPointer public controllerPointer;
+    ControllerPointer public controllerPointer = ControllerPointer(0xE0f5206BBD039e7b0592d8918820024e2a7437b9);
 
     Multihash public memehash;
 
@@ -26,12 +27,12 @@ contract ERC0Main is StandardToken {
     }
 
     modifier onlyController() {
-        require(msg.sender == ControllerPointer.getController());
+        require(msg.sender == controllerPointer.getController());
         _;
     }
 
-    event Mint(address indexed to, uint256 amount, uint256 totalCost);
-    event Burn(address indexed burner, uint256 amount, uint256 reward);
+    event Mint(address indexed to, uint256 amount);
+    event Burn(address indexed burner, uint256 amount);
     event Inited(bytes32 memehash);
     event Finalized();
 
@@ -44,8 +45,7 @@ contract ERC0Main is StandardToken {
     uint8 _hashFunction,
     uint8 _size,
     bytes32 _memehash,
-
-    address _controllerPointer
+    uint256 numTokens
   ) public
     payable {
 
@@ -64,20 +64,18 @@ contract ERC0Main is StandardToken {
     memehash.size = _size;
     memehash.memehash = _memehash;
 
-    controllerPointer = ControllerPointer(_controllerPointer);
-
     require(
         ControllerI(controllerPointer.getController()).initMeme.value(msg.value)(
-            /* address(this), */
             msg.sender,
-            /* string _name, */
-            /* string _symbol, */
-            /* uint8 hash_function, */
-            uint8 size,
-            bytes32 _memehash
+            _name,
+            _symbol,
+            _hashFunction,
+            _size,
+            _memehash,
+            numTokens
         )
     );
-    Inited(memehash);
+    emit Inited(_memehash);
   }
 
   function setSlope(uint32 _slope) public returns (bool) {
@@ -95,7 +93,7 @@ contract ERC0Main is StandardToken {
   function finalize() public returns (bool) {
     require(!finalized);
     finalized = true;
-    Finalized();
+    emit Finalized();
     return true;
   }
 
