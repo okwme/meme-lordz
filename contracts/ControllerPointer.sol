@@ -19,8 +19,9 @@ contract ControllerPointer is Ownable {
         return ERC20Main;
     }
     function setERC20Main(address _erc20Main) public onlyOwner {
-        require(!erc20Set);
+        // @TODO put this back in
+        // require(!erc20Set);
         ERC20Main = _erc20Main;
-        erc20Set = true;
+        // erc20Set = true;
     }
 }
