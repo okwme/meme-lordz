@@ -19,6 +19,7 @@ contract('ProxyFactory', async function(accounts) {
   let size = '20';
   let memehash = '0x7D5A99F603F231D53A4F39D1521F98D2E8BB279CF29BEBFD0687DC98458E7F89';
   let proxyAddress;
+  let numTokens = 10**18 +1;
 
   before(done => {
     ;(async () => {
@@ -69,7 +70,7 @@ contract('ProxyFactory', async function(accounts) {
         "stateMutability": "payable",
         "type": "function"
       }
-      const data = ethjs.encodeMethod(initMeme, [name, symbol, hashFunction, size, memehash, 0]);
+      const data = ethjs.encodeMethod(initMeme, [name, symbol, hashFunction, size, memehash, numTokens]);
       const proxy = await proxyFactory.createProxy(data, { value: utils.toWei("10", "ether") })
       proxyAddress = proxy.receipt.logs[0].address;
       console.log(`proxyAddress is  ${proxyAddress}`)
@@ -80,10 +81,7 @@ contract('ProxyFactory', async function(accounts) {
 
     it('should should not throw allow initMeme to be called again', async function() {
       var erc20Instance = Erc20Main.at(proxyAddress);
-      // var inited = await erc20Instance.initMeme(name, symbol, hashFunction, size, memehash, 0);
-      await testWillThrow(erc20Instance.initMeme, [name, symbol, hashFunction, size, memehash, 0])
-      // assert.throws(erc20Instance.initMeme(name, symbol, hashFunction, size, memehash, 0),
-      //  'initMeme cannot be called twice')
+      await testWillThrow(erc20Instance.initMeme, [name, symbol, hashFunction, size, memehash, ])
     })
   })
 })

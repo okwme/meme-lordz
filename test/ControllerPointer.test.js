@@ -1,6 +1,9 @@
 var utils = require('web3-utils')
 var ControllerPointer = artifacts.require('./ControllerPointer.sol')
 var Controller = artifacts.require('./Controller.sol')
+const {
+  getReceipt
+} = require('./helpers/main.js')
 
 let ONEGWEI = 1000000000 // 1GWEI
 
@@ -14,25 +17,17 @@ contract('ControllerPointer', async function(accounts) {
         var totalGas = new web3.BigNumber(0)
 
         // Deploy Controller.sol
-        controller = await Controller.new()
-        var tx = web3.eth.getTransactionReceipt(controller.transactionHash)
-        totalGas = totalGas.plus(tx.gasUsed)
-        console.log(_ + tx.gasUsed + ' - Deploy controller')
+        controller = await Controller.deployed()
 
         // Deploy ControllerPointer.sol
-        controllerPointer = await ControllerPointer.new(controller.address)
-        var tx = web3.eth.getTransactionReceipt(
-          controllerPointer.transactionHash
-        )
-        totalGas = totalGas.plus(tx.gasUsed)
-        console.log(_ + tx.gasUsed + ' - Deploy controllerPointer')
+        controllerPointer = await ControllerPointer.deployed()
 
         console.log(_ + '-----------------------')
         console.log(_ + totalGas.toFormat(0) + ' - Total Gas')
         done()
       } catch (error) {
         console.error(error)
-        done(false)
+        done(error)
       }
     })()
   })
@@ -66,6 +61,7 @@ contract('ControllerPointer', async function(accounts) {
       assert(!erc20Set, 'erc20Set should be false but it is ' + erc20Set)
 
       let ERC20Address = accounts[2]
+      console.log(accounts[2])
       await controllerPointer.setERC20Main(ERC20Address)
       const returnedERC20Address = await controllerPointer.getERC20Main()
       assert(
@@ -94,57 +90,3 @@ contract('ControllerPointer', async function(accounts) {
     })
   })
 })
-
-function getBlockNumber() {
-  return new Promise((resolve, reject) => {
-    web3.eth.getBlockNumber((error, result) => {
-      if (error) reject(error)
-      resolve(result)
-    })
-  })
-}
-
-function increaseBlocks(blocks) {
-  return new Promise((resolve, reject) => {
-    increaseBlock().then(() => {
-      blocks -= 1
-      if (blocks == 0) {
-        resolve()
-      } else {
-        increaseBlocks(blocks).then(resolve)
-      }
-    })
-  })
-}
-
-function increaseBlock() {
-  return new Promise((resolve, reject) => {
-    web3.currentProvider.sendAsync(
-      {
-        jsonrpc: '2.0',
-        method: 'evm_mine',
-        id: 12345
-      },
-      (err, result) => {
-        if (err) reject(err)
-        resolve(result)
-      }
-    )
-  })
-}
-
-function decodeEventString(hexVal) {
-  return hexVal
-    .match(/.{1,2}/g)
-    .map(a =>
-      a
-        .toLowerCase()
-        .split('')
-        .reduce(
-          (result, ch) => result * 16 + '0123456789abcdefgh'.indexOf(ch),
-          0
-        )
-    )
-    .map(a => String.fromCharCode(a))
-    .join('')
-}
