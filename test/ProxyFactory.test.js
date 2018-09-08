@@ -2,6 +2,9 @@ var utils = require('web3-utils')
 var ethjs = require('ethjs-abi')
 var ProxyFactory = artifacts.require('./ProxyFactory.sol')
 var Erc20Main = artifacts.require('./ERC20Main.sol')
+const {
+  testWillThrow
+} = require('./helpers/main.js')
 
 let gasPrice = 1000000000 // 1GWEI
 
@@ -15,20 +18,13 @@ contract('ProxyFactory', async function(accounts) {
   let hashFunction = '12';
   let size = '20';
   let memehash = '0x7D5A99F603F231D53A4F39D1521F98D2E8BB279CF29BEBFD0687DC98458E7F89';
+  let proxyAddress;
 
   before(done => {
     ;(async () => {
       try {
-        var totalGas = new web3.BigNumber(0)
-
-        // console.log('In ProxyFactory tests')
-        // var nonce = await web3.eth.getTransactionCount(web3.eth.accounts[0]);
-        // console.log('Nonce is ' + nonce)
-
         proxyFactory = await ProxyFactory.deployed();
-
         console.log(_ + '-----------------------')
-        console.log(_ + totalGas.toFormat(0) + ' - Total Gas')
         done()
       } catch (error) {
         console.error(error)
@@ -38,7 +34,7 @@ contract('ProxyFactory', async function(accounts) {
   })
 
   describe('ProxyFactory.sol', function() {
-    it('should create a contract', async function() {
+    it('should create an erc20 contract', async function() {
       const initMeme = {
         "constant": false,
         "inputs": [
@@ -74,67 +70,20 @@ contract('ProxyFactory', async function(accounts) {
         "type": "function"
       }
       const data = ethjs.encodeMethod(initMeme, [name, symbol, hashFunction, size, memehash, 0]);
-      console.log(data)
-      const proxy = await proxyFactory.createProxy(data)
-      console.log(proxy)
-      console.log(proxy.receipt.logs)
+      const proxy = await proxyFactory.createProxy(data, { value: utils.toWei("10", "ether") })
+      proxyAddress = proxy.receipt.logs[0].address;
+      console.log(`proxyAddress is  ${proxyAddress}`)
+      var erc20Instance = Erc20Main.at(proxyAddress);
+      var decimals = await erc20Instance.decimals();
+      assert(decimals.toString() === '18', 'balance should equal sent amount')
+    })
 
-
-      assert(true === true, 'this is true')
+    it('should should not throw allow initMeme to be called again', async function() {
+      var erc20Instance = Erc20Main.at(proxyAddress);
+      // var inited = await erc20Instance.initMeme(name, symbol, hashFunction, size, memehash, 0);
+      await testWillThrow(erc20Instance.initMeme, [name, symbol, hashFunction, size, memehash, 0])
+      // assert.throws(erc20Instance.initMeme(name, symbol, hashFunction, size, memehash, 0),
+      //  'initMeme cannot be called twice')
     })
   })
 })
-
-function getBlockNumber() {
-  return new Promise((resolve, reject) => {
-    web3.eth.getBlockNumber((error, result) => {
-      if (error) reject(error)
-      resolve(result)
-    })
-  })
-}
-
-function increaseBlocks(blocks) {
-  return new Promise((resolve, reject) => {
-    increaseBlock().then(() => {
-      blocks -= 1
-      if (blocks == 0) {
-        resolve()
-      } else {
-        increaseBlocks(blocks).then(resolve)
-      }
-    })
-  })
-}
-
-function increaseBlock() {
-  return new Promise((resolve, reject) => {
-    web3.currentProvider.sendAsync(
-      {
-        jsonrpc: '2.0',
-        method: 'evm_mine',
-        id: 12345
-      },
-      (err, result) => {
-        if (err) reject(err)
-        resolve(result)
-      }
-    )
-  })
-}
-
-function decodeEventString(hexVal) {
-  return hexVal
-    .match(/.{1,2}/g)
-    .map(a =>
-      a
-        .toLowerCase()
-        .split('')
-        .reduce(
-          (result, ch) => result * 16 + '0123456789abcdefgh'.indexOf(ch),
-          0
-        )
-    )
-    .map(a => String.fromCharCode(a))
-    .join('')
-}

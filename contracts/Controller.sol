@@ -88,6 +88,7 @@ contract Controller is ControllerI, BancorFormula {
         if (msg.value > 0) {
             require(buy(msg.sender, sender));
         }
+        //@TODO if this is called with no numTokens and msg.value, the ether gets trapped in controller
         return true;
     }
 }
