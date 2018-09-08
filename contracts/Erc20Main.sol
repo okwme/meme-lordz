@@ -1,45 +1,77 @@
 import "zeppelin-solidity/contracts/token/ERC20/StandardToken.sol";
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
-
+import "ControllerI.sol"
+import "ControllerPointer.sol"
 contract Erc20Main is StandardToken {
-  string public name;
-  string public symbol;
-  uint8 public decimals;
-  uint8 public exponent;
-  uint32 public slope;
-  uint256 public poolBalance;
-  bool public finalized;
-  string public memehash;
-  bool inited;
 
-  // struct Multihash {
-  //   bytes32 hash;
-  //   uint8 hash_function;
-  //   uint8 size;
-  // }
+    bool inited;
+    bool public finalized;
 
-  event Mint(address indexed to, uint256 amount, uint256 totalCost);
-  event Burn(address indexed burner, uint256 amount, uint256 reward);
-  event Inited(string __memehash);
-  event Finalized();
+    uint8 public decimals;
+    uint8 public exponent;
+    uint32 public slope;
+    uint256 public poolBalance;
+    ControllerI public controller;
+    ControllerPointer public controllerPointer;
+
+    Multihash public memehash;
+
+    string public name;
+    string public symbol;
+
+    struct Multihash {
+        uint8 hashFunction;
+        uint8 size;
+        bytes32 memehash;
+    }
+
+    event Mint(address indexed to, uint256 amount, uint256 totalCost);
+    event Burn(address indexed burner, uint256 amount, uint256 reward);
+    event Inited(bytes32 memehash);
+    event Finalized();
 
   using SafeMath for uint256;
 
   function initMeme(
     string _name,
     string _symbol,
-    string _memehash
-  ) public 
+
+    uint8 _hashFunction,
+    uint8 _size,
+    bytes32 _memehash,
+
+    address _controllerPointer
+  ) public
     payable {
+
     require(!inited);
     require(poolBalance == 0 && totalSupply_ == 0);
-    name = _name;
-    symbol = _symbol;
+
     decimals = 18;
     exponent = 1;
-    memehash = _memehash;
     slope = 1;
     inited = true;
+
+    name = _name;
+    symbol = _symbol;
+
+    memehash.hashFunction = _hashFunction;
+    memehash.size = _size;
+    memehash.memehash = _memehash;
+
+    controllerPointer = ControllerPointer(_controllerPointer);
+
+    require(
+        ControllerI(controllerPointer.getController()).initMeme.value(msg.value)(
+            /* address(this), */
+            msg.sender,
+            /* string _name, */
+            /* string _symbol, */
+            /* uint8 hash_function, */
+            uint8 size,
+            bytes32 _memehash
+        )
+    );
     Inited(memehash);
   }
 
@@ -77,32 +109,19 @@ contract Erc20Main is StandardToken {
 
   /// @dev                Mint new tokens with ether
   /// @param numTokens    The number of tokens you want to mint
-  function mint(uint256 numTokens) public payable {
-    uint256 priceForTokens = priceToMint(numTokens);
-    require(msg.value >= priceForTokens);
-
+  function mint(address minter, uint256 numTokens) public onlyController {
     totalSupply_ = totalSupply_.add(numTokens);
-    balances[msg.sender] = balances[msg.sender].add(numTokens);
-    poolBalance = poolBalance.add(priceForTokens);
-    if (msg.value > priceForTokens) {
-        msg.sender.transfer(msg.value - priceForTokens);
-    }
-
-    emit Mint(msg.sender, numTokens, priceForTokens);
+    balances[minter] = balances[minter].add(numTokens);
+    emit Mint(minter, numTokens);
   }
 
   /// @dev                Burn tokens to receive ether
+  /// @param burner         The number of tokens that you want to burn
   /// @param numTokens    The number of tokens that you want to burn
-  function burn(uint256 numTokens) public {
-    require(balances[msg.sender] >= numTokens);
-
-    uint256 ethToReturn = rewardForBurn(numTokens);
+  function burn(address burner, uint256 numTokens) public {
     totalSupply_ = totalSupply_.sub(numTokens);
-    balances[msg.sender] = balances[msg.sender].sub(numTokens);
-    poolBalance = poolBalance.sub(ethToReturn);
-    msg.sender.transfer(ethToReturn);
-
-    emit Burn(msg.sender, numTokens, ethToReturn);
+    balances[burner] = balances[burner].sub(numTokens);
+    emit Burn(burner, numTokens);
   }
 
 }
