@@ -13,7 +13,7 @@ contract ERC20Main is StandardToken {
     uint32 public slope;
     uint256 public poolBalance;
     ControllerI public controller;
-    ControllerPointer public controllerPointer = ControllerPointer(0x55378008553780085537800855378008);
+    ControllerPointer public controllerPointer = ControllerPointer(0x2ec49b0c81bfd28742bf7becd9bb8b52f85111d2);
 
     Multihash public memehash;
 

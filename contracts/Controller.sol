@@ -3,15 +3,11 @@ import "./ERC20MainI.sol";
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
 
 contract Controller is ControllerI {
-<<<<<<< HEAD
-    event Buy(address indexed memeMarket, address indexed to, uint256 poolBalance, uint tokenSupply, uint256 amountTokens, uint256 totalCostEth);
-    event Sell(address indexed memeMarket, address indexed from, uint256 poolBalance, uint tokenSupply, uint256 amountTokens, uint256 returnedEth);
-=======
+
     using SafeMath for uint256;
 
-    event Buy(address indexed memeMarket, address indexed to, uint256 amountTokens, uint256 totalCostEth);
-    event Sell(address indexed memeMarket, address indexed from, uint256 amountTokens, uint256 returnedEth);
->>>>>>> 347750d9d1dfa3cfd1e0a22e300bc674f3947326
+    event Buy(address indexed memeMarket, address indexed to, uint256 poolBalance, uint tokenSupply, uint256 amountTokens, uint256 totalCostEth);
+    event Sell(address indexed memeMarket, address indexed from, uint256 poolBalance, uint tokenSupply, uint256 amountTokens, uint256 returnedEth);
 
       function curveIntegral(uint8 exponent, uint32 slope, uint256 tokens) internal returns (uint256) {
         uint256 nexp = exponent + 1;
@@ -59,12 +55,8 @@ contract Controller is ControllerI {
       sentEther = sentEther.sub(refundAmount);
     }
     memeMarket.transfer(sentEther);
-<<<<<<< HEAD
-    emit Buy(memeMarket, msg.sender, ERC20MainI(memeMarket).poolBalance(), ERC20MainI(memeMarket).tokenSupply, numTokens, priceForTokens);
-=======
-    emit Buy(memeMarket, sender, numTokens, priceForTokens);
+    emit Buy(memeMarket, msg.sender, ERC20MainI(memeMarket).poolBalance(), ERC20MainI(memeMarket).totalSupply(), numTokens, priceForTokens);
     return true;
->>>>>>> 347750d9d1dfa3cfd1e0a22e300bc674f3947326
   }
 
   /// @dev                Burn tokens to receive ether
@@ -84,7 +76,7 @@ contract Controller is ControllerI {
     ERC20MainI(memeMarket).setPoolBalance(poolBalance.sub(ethToReturn));
     require(ERC20MainI(memeMarket).sendEth(msg.sender, ethToReturn));
 
-    emit Sell(memeMarket, msg.sender, ERC20MainI(memeMarket).poolBalance(), ERC20MainI(memeMarket).tokenSupply, numTokens, ethToReturn);
+    emit Sell(memeMarket, msg.sender, ERC20MainI(memeMarket).poolBalance(), ERC20MainI(memeMarket).totalSupply(), numTokens, ethToReturn);
   }
 
   function initMeme(

@@ -3,11 +3,11 @@ import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
 contract ControllerPointer is Ownable {
     address controller;
     address ERC20Main;
+    bool erc20Set;
 
-    constructor(address _controller, address _ERC20Main) {
+    constructor(address _controller) {
         owner = msg.sender;
         setController(_controller);
-        ERC20Main = _ERC20Main;
     }
     function getController() public constant returns(address) {
         return controller;
@@ -17,5 +17,10 @@ contract ControllerPointer is Ownable {
     }
     function getERC20Main() public constant returns(address) {
         return ERC20Main;
+    }
+    function setERC20Main(address _erc20Main) public onlyOwner {
+        require(!erc20Set);
+        ERC20Main = _erc20Main;
+        erc20Set = true;
     }
 }
