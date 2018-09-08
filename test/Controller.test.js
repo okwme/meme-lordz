@@ -203,7 +203,34 @@ contract('Controller.sol', async function(accounts) {
       const self = accounts[0]
       let ethBalanceBefore = await web3.eth.getBalance(self)
       let tokensBefore = await eRC20Main.balanceOf(self)
-      var tx = await controller.sell
+
+      const totalSupply = await eRC20Main.totalSupply()
+      const poolBalance = await eRC20Main.poolBalance()
+      let sellResult = await controller.getSell(
+        totalSupply,
+        poolBalance,
+        tokensBefore
+      )
+
+      try {
+        var tx = await controller.sell(eRC20Main.address, tokensBefore)
+        console.log(_ + 'controller.sell? ' + tx.receipt.status)
+        let ethBalanceAfter = await web3.eth.getBalance(self)
+        let tokensAfter = await eRC20Main.balanceOf(self)
+        assert(
+          tokensAfter.toString() === '0',
+          'tokensAfter (' + utils.fromWei(tokensAfter.toString()) + ') not 0'
+        )
+        console.log(_ + 'before: ' + utils.fromWei(ethBalanceBefore.toString()))
+        console.log(_ + 'after: ' + utils.fromWei(ethBalanceAfter.toString()))
+        assert(
+          parseFloat(utils.fromWei(ethBalanceAfter.toString())) >
+            parseFloat(utils.fromWei(ethBalanceBefore.toString())),
+          'ethBalanceAfter was not more than ethBalanceBefore'
+        )
+      } catch (error) {
+        console.log('error', error)
+      }
     })
   })
 })
