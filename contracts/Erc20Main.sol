@@ -112,15 +112,21 @@ contract ERC0Main is StandardToken {
   /// @dev                Burn tokens to receive ether
   /// @param burner         The number of tokens that you want to burn
   /// @param numTokens    The number of tokens that you want to burn
-  function burn(address burner, uint256 numTokens) public onlyController {
+  function burn(address burner, uint256 numTokens) public onlyController returns(bool) {
     totalSupply_ = totalSupply_.sub(numTokens);
     balances[burner] = balances[burner].sub(numTokens);
     emit Burn(burner, numTokens);
+    return true;
   }
 
   function setPoolBalance(uint256 _poolBalance) public onlyController {
       poolBalance = _poolBalance;
   }
   /* function getPoolBalance() TODO: if needed  */
+
+  function sendEth(address recipient, uint256 amountToSend) public onlyController returns(bool) {
+    recipient.transfer(amountToSend);
+    return true;
+  }
 
 }

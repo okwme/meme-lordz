@@ -1,20 +1,30 @@
 import "./ControllerI.sol";
 import "./ERC20MainI.sol";
 contract Controller is ControllerI {
-    event Buy(address indexed memeMarket, address indexed to, uint256 amount, uint256 totalCost);
+    event Buy(address indexed memeMarket, address indexed to, uint256 amountTokens, uint256 totalCostEth);
+    event Sell(address indexed memeMarket, address indexed from, uint256 amountTokens, uint256 returnedEth);
 
-
-      function curveIntegral(uint256 exponent, uint256 slope, uint256 tokens) internal returns (uint256) {
+      function curveIntegral(uint8 exponent, uint32 slope, uint256 tokens) internal returns (uint256) {
         uint256 nexp = exponent + 1;
         return (tokens ** nexp).div(nexp).div(slope);
       }
 
-      function priceToMint(uint256 exponent, uint256 slope, uint256 totalSupply, uint256 poolBalance, uint256 numTokens) public returns(uint256) {
+      function priceToMint(
+        uint8 exponent,
+        uint32 slope,
+        uint256 totalSupply,
+        uint256 poolBalance,
+        uint256 numTokens) public returns(uint256) {
         return curveIntegral(exponent, slope, totalSupply.add(numTokens)).sub(poolBalance);
       }
 
-      function rewardForBurn(uint256 numTokens) public returns(uint256) {
-        return poolBalance.sub(curveIntegral(totalSupply_.sub(numTokens)));
+      function rewardForBurn(
+        uint8 exponent,
+        uint32 slope,
+        uint256 totalSupply,
+        uint256 poolBalance,
+        uint256 numTokens) public returns(uint256) {
+        return poolBalance.sub(curveIntegral(exponent, slope, totalSupply.sub(numTokens)));
       }
 
 
@@ -22,10 +32,11 @@ contract Controller is ControllerI {
   /// @param memeMarket   the marketplace
   /// @param numTokens    The number of tokens you want to mint
   function buy(address memeMarket, uint256 numTokens) public payable {
+    uint256 sentEther = msg.value;
     uint256 totalSupply = ERC20MainI(memeMarket).totalSupply();
     uint256 poolBalance = ERC20MainI(memeMarket).poolBalance();
-    uint256 exponent = ERC20MainI(memeMarket).exponent();
-    uint256 slope = ERC20MainI(memeMarket).slope();
+    uint8 exponent = ERC20MainI(memeMarket).exponent();
+    uint32 slope = ERC20MainI(memeMarket).slope();
 
     uint256 priceForTokens = priceToMint(exponent, slope, totalSupply, poolBalance, numTokens);
     require(msg.value >= priceForTokens);
@@ -33,23 +44,32 @@ contract Controller is ControllerI {
     require(ERC20MainI(memeMarket).mint(msg.sender, numTokens));
     ERC20MainI(memeMarket).setPoolBalance(poolBalance.add(priceForTokens));
 
-    /* if (msg.value > priceForTokens) {
-        msg.sender.transfer(msg.value.sub(priceForTokens));
-    } */
+    if (sentEther > priceForTokens) {
+      uint256 refundAmount = sentEther.sub(priceForTokens);
+      msg.sender.transfer(refundAmount);
+      sentEther = sentEther.sub(refundAmount);
+    }
+    memeMarket.transfer(sentEther);
     emit Buy(memeMarket, msg.sender, numTokens, priceForTokens);
   }
 
   /// @dev                Burn tokens to receive ether
   /// @param numTokens    The number of tokens that you want to burn
-  function burn(uint256 numTokens) public {
-    require(balances[msg.sender] >= numTokens);
+  function sell(address memeMarket, uint256 numTokens) public {
+    uint256 senderBalance = ERC20MainI(memeMarket).balanceOf(msg.sender);
+    require(senderBalance >= numTokens);
 
-    uint256 ethToReturn = rewardForBurn(numTokens);
-    totalSupply_ = totalSupply_.sub(numTokens);
-    balances[msg.sender] = balances[msg.sender].sub(numTokens);
-    poolBalance = poolBalance.sub(ethToReturn);
-    msg.sender.transfer(ethToReturn);
+    uint256 totalSupply = ERC20MainI(memeMarket).totalSupply();
+    uint256 poolBalance = ERC20MainI(memeMarket).poolBalance();
+    uint8 exponent = ERC20MainI(memeMarket).exponent();
+    uint32 slope = ERC20MainI(memeMarket).slope();
 
-    emit Burn(msg.sender, numTokens, ethToReturn);
+    uint256 ethToReturn = rewardForBurn(exponent, slope, totalSupply, poolBalance, numTokens);
+    
+    require(ERC20MainI(memeMarket).burn(msg.sender, numTokens));
+    ERC20MainI(memeMarket).setPoolBalance(poolBalance.sub(ethToReturn));
+    require(ERC20MainI(memeMarket).sendEth(msg.sender, ethToReturn));
+
+    emit Sell(memeMarket, msg.sender, numTokens, ethToReturn);
   }
 }
