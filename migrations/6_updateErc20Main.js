@@ -4,7 +4,7 @@ let _ = '        '
 
 module.exports = (deployer, helper, accounts) => {
   deployer.then(async () => {
-    return;
+    return
     try {
       await deployer.deploy(Erc20Main, { overwrite: true })
       const erc20Main = await Erc20Main.deployed()
