@@ -92,7 +92,7 @@ contract Controller is ControllerI, BancorFormula {
                 uint8 size,
                 bytes32 _memehash,
                 uint256 _numTokens) public payable returns (bool) {
-                    require(buy(msg.sender, sender, _numTokens));
+                    //require(buy(msg.sender, sender, _numTokens));
                     return true;
                 }
             }

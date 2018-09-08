@@ -14,12 +14,12 @@ contract('ControllerPointer', async function(accounts) {
         var totalGas = new web3.BigNumber(0)
 
         // Deploy ControllerPointer.sol
-        controllerPointer = await ControllerPointer.new()
-        var tx = web3.eth.getTransactionReceipt(
-          controllerPointer.transactionHash
-        )
-        totalGas = totalGas.plus(tx.gasUsed)
-        console.log(_ + tx.gasUsed + ' - Deploy controllerPointer')
+        //controllerPointer = await ControllerPointer.new()
+        // var tx = web3.eth.getTransactionReceipt(
+        //   controllerPointer.transactionHash
+        // )
+        // totalGas = totalGas.plus(tx.gasUsed)
+        // console.log(_ + tx.gasUsed + ' - Deploy controllerPointer')
         controllerPointer = await ControllerPointer.deployed()
 
         console.log(_ + '-----------------------')
