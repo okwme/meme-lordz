@@ -32,8 +32,7 @@ module.exports = {
         // using wallet at index 1 ----------------------------------------------------------------------------------------v
         return new HDWalletProvider(
           process.env.TESTNET_MNEMONIC,
-          'https://kovan.infura.io/' + process.env.INFURA_API_KEY,
-          1
+          'https://kovan.infura.io/' + process.env.INFURA_API_KEY
         )
       },
       network_id: 42

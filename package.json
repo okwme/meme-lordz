@@ -7,7 +7,9 @@
     "deploy": "truffle migrate --reset --compile-all",
     "lint": "solium --dir contracts/",
     "lint:watch": "solium --watch --dir contracts/",
-    "lint:fix": "solium  --dir contracts/ --fix"
+    "lint:fix": "solium  --dir contracts/ --fix",
+    "test:mocha": "mocha --opts ./mocha.opts  ./test/*.js --reporter spec",
+
   },
   "main": "index.js",
   "directories": {
