@@ -12,16 +12,18 @@ contract('ProxyFactory', async function(accounts) {
   let erc20Main;
   let name = 'Memecoin';
   let symbol = 'MEME';
-  let memehash = 'QmTtDqWzo179ujTXU7pf2PodLNjpcpQQCXhkiQXi6wZvKd';
+  let hashFunction = 12;
+  let size = 20;
+  let memehash = '0x7D5A99F603F231D53A4F39D1521F98D2E8BB279CF29BEBFD0687DC98458E7F89';
 
   before(done => {
     ;(async () => {
       try {
         var totalGas = new web3.BigNumber(0)
 
-        console.log('In ProxyFactory tests')
-        var nonce = await web3.eth.getTransactionCount(web3.eth.accounts[0]);
-        console.log('Nonce is ' + nonce)
+        // console.log('In ProxyFactory tests')
+        // var nonce = await web3.eth.getTransactionCount(web3.eth.accounts[0]);
+        // console.log('Nonce is ' + nonce)
 
         console.log(_ + '-----------------------')
         console.log(_ + totalGas.toFormat(0) + ' - Total Gas')
@@ -36,28 +38,40 @@ contract('ProxyFactory', async function(accounts) {
   describe('ProxyFactory.sol', function() {
     it('should create a contract', async function() {
       const initMeme = {
-        "constant": false,
-        "inputs": [
-          {
-            "name": "_name",
-            "type": "string"
-          },
-          {
-            "name": "_symbol",
-            "type": "string"
-          },
-          {
-            "name": "_memehash",
-            "type": "string"
-          }
-        ],
-        "name": "initMeme",
-        "outputs": [],
-        "payable": true,
-        "stateMutability": "payable",
-        "type": "function"
-      }
-      const data = ethjs.encodeMethod(initMeme, [name, symbol, memehash]);
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_name",
+          "type": "string"
+        },
+        {
+          "name": "_symbol",
+          "type": "string"
+        },
+        {
+          "name": "_hashFunction",
+          "type": "uint8"
+        },
+        {
+          "name": "_size",
+          "type": "uint8"
+        },
+        {
+          "name": "_memehash",
+          "type": "bytes32"
+        },
+        {
+          "name": "numTokens",
+          "type": "uint256"
+        }
+      ],
+      "name": "initMeme",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    }
+      const data = ethjs.encodeMethod(initMeme, [name, symbol, hashFunction, size, memehash, 0]);
       console.log(data)
       //proxyFactory.createProxy()
       assert(
