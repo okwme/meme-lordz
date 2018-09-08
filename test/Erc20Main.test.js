@@ -6,7 +6,7 @@ let gasPrice = 1000000000 // 1GWEI
 let _ = '        '
 
 contract('Erc20Main', async function(accounts) {
-  let erc20Main;
+  let erc20Main
 
   before(done => {
     ;(async () => {
@@ -36,12 +36,8 @@ contract('Erc20Main', async function(accounts) {
 
   describe('Sample.sol', function() {
     it('should pass', async function() {
-      assert(
-        true === true,
-        'this is true'
-      )
+      assert(true === true, 'this is true')
     })
-
   })
 })
 
