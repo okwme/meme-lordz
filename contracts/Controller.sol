@@ -5,7 +5,7 @@ import "bancor-contracts/solidity/contracts/converter/BancorFormula.sol";
 
 contract Controller is ControllerI, BancorFormula {
     using SafeMath for uint256;
-    
+
     uint32 public exponent = 2;
     uint32 public slope = 1000;
 

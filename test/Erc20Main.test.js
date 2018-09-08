@@ -13,17 +13,6 @@ contract('Erc20Main', async function(accounts) {
       try {
         var totalGas = new web3.BigNumber(0)
 
-        // console.log('in Erc20Main tests')
-        // var nonce = await web3.eth.getTransactionCount(web3.eth.accounts[0]);
-        // console.log('Nonce is ' + nonce)
-
-        // Deploy Erc20Main.sol
-        // erc20Main = await Erc20Main.new()
-        // var tx = web3.eth.getTransactionReceipt(erc20Main.transactionHash)
-        // totalGas = totalGas.plus(tx.gasUsed)
-        // console.log(_ + tx.gasUsed + ' - Deploy erc20Main')
-        // erc20Main = await Erc20Main.deployed()
-
         console.log(_ + '-----------------------')
         console.log(_ + totalGas.toFormat(0) + ' - Total Gas')
         done()

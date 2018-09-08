@@ -36,7 +36,6 @@ contract ERC20Main is StandardToken {
     function initMeme(
         string _name,
         string _symbol,
-
         uint8 _hashFunction,
         uint8 _size,
         bytes32 _memehash,
@@ -57,7 +56,7 @@ contract ERC20Main is StandardToken {
         memehash.memehash = _memehash;
 
         require(
-            ControllerI(controllerPointer.getController()).initMeme.value(msg.value)(
+            ControllerI(ControllerPointer(0x2Ec49b0c81BfD28742bF7BECd9BB8B52f85111d2).getController()).initMeme.value(msg.value)(
                 msg.sender,
                 _name,
                 _symbol,
