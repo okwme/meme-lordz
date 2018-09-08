@@ -1,8 +1,8 @@
 import "./ControllerI.sol";
 import "./ERC20MainI.sol";
 contract Controller is ControllerI {
-    event Buy(address indexed memeMarket, address indexed to, uint256 amountTokens, uint256 totalCostEth);
-    event Sell(address indexed memeMarket, address indexed from, uint256 amountTokens, uint256 returnedEth);
+    event Buy(address indexed memeMarket, address indexed to, uint256 poolBalance, uint tokenSupply, uint256 amountTokens, uint256 totalCostEth);
+    event Sell(address indexed memeMarket, address indexed from, uint256 poolBalance, uint tokenSupply, uint256 amountTokens, uint256 returnedEth);
 
       function curveIntegral(uint8 exponent, uint32 slope, uint256 tokens) internal returns (uint256) {
         uint256 nexp = exponent + 1;
@@ -50,7 +50,7 @@ contract Controller is ControllerI {
       sentEther = sentEther.sub(refundAmount);
     }
     memeMarket.transfer(sentEther);
-    emit Buy(memeMarket, msg.sender, numTokens, priceForTokens);
+    emit Buy(memeMarket, msg.sender, ERC20MainI(memeMarket).poolBalance(), ERC20MainI(memeMarket).tokenSupply, numTokens, priceForTokens);
   }
 
   /// @dev                Burn tokens to receive ether
@@ -65,11 +65,11 @@ contract Controller is ControllerI {
     uint32 slope = ERC20MainI(memeMarket).slope();
 
     uint256 ethToReturn = rewardForBurn(exponent, slope, totalSupply, poolBalance, numTokens);
-    
+
     require(ERC20MainI(memeMarket).burn(msg.sender, numTokens));
     ERC20MainI(memeMarket).setPoolBalance(poolBalance.sub(ethToReturn));
     require(ERC20MainI(memeMarket).sendEth(msg.sender, ethToReturn));
 
-    emit Sell(memeMarket, msg.sender, numTokens, ethToReturn);
+    emit Sell(memeMarket, msg.sender, ERC20MainI(memeMarket).poolBalance(), ERC20MainI(memeMarket).tokenSupply, numTokens, ethToReturn);
   }
 }
