@@ -1,11 +1,20 @@
 const assert = require('assert')
 const contracts = require('../index.js')
 const Web3 = require('web3')
+const { exec } = require('child_process')
 
 global.web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:7545'))
 
 describe('Controller.sol', function() {
   before(async () => {
+    exec('ganache-cli evm_revert', (err, stdout, stderr) => {
+      if (err) {
+        console.error(`exec error: ${err}`)
+        return
+      }
+      console.log(`out ${stdout}`)
+    })
+
     const accounts = await global.web3.eth.getAccounts()
     const address = await deploy(contracts.Controller, accounts[0], [])
     contracts.Controller.instance = new global.web3.eth.Contract(

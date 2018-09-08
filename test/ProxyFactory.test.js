@@ -1,5 +1,5 @@
 var utils = require('web3-utils')
-var ethjs = require('ethjs-abi');
+var ethjs = require('ethjs-abi')
 var ProxyFactory = artifacts.require('./ProxyFactory.sol')
 var Erc20Main = artifacts.require('./ERC20Main.sol')
 
@@ -8,11 +8,11 @@ let gasPrice = 1000000000 // 1GWEI
 let _ = '        '
 
 contract('ProxyFactory', async function(accounts) {
-  let proxyFactory;
-  let erc20Main;
-  let name = 'Memecoin';
-  let symbol = 'MEME';
-  let memehash = 'QmTtDqWzo179ujTXU7pf2PodLNjpcpQQCXhkiQXi6wZvKd';
+  let proxyFactory
+  let erc20Main
+  let name = 'Memecoin'
+  let symbol = 'MEME'
+  let memehash = 'QmTtDqWzo179ujTXU7pf2PodLNjpcpQQCXhkiQXi6wZvKd'
 
   before(done => {
     ;(async () => {
@@ -46,36 +46,32 @@ contract('ProxyFactory', async function(accounts) {
   describe('ProxyFactory.sol', function() {
     it('should create a contract', async function() {
       const initMeme = {
-        "constant": false,
-        "inputs": [
+        constant: false,
+        inputs: [
           {
-            "name": "_name",
-            "type": "string"
+            name: '_name',
+            type: 'string'
           },
           {
-            "name": "_symbol",
-            "type": "string"
+            name: '_symbol',
+            type: 'string'
           },
           {
-            "name": "_memehash",
-            "type": "string"
+            name: '_memehash',
+            type: 'string'
           }
         ],
-        "name": "initMeme",
-        "outputs": [],
-        "payable": true,
-        "stateMutability": "payable",
-        "type": "function"
+        name: 'initMeme',
+        outputs: [],
+        payable: true,
+        stateMutability: 'payable',
+        type: 'function'
       }
-      const data = ethjs.encodeMethod(initMeme, [name, symbol, memehash]);
+      const data = ethjs.encodeMethod(initMeme, [name, symbol, memehash])
       console.log(data)
       //proxyFactory.createProxy()
-      assert(
-        true === true,
-        'this is true'
-      )
+      assert(true === true, 'this is true')
     })
-
   })
 })
 

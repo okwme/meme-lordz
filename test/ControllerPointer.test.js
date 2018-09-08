@@ -1,24 +1,26 @@
 var utils = require('web3-utils')
-var Erc20Main = artifacts.require('./ERC20Main.sol')
+var ControllerPointer = artifacts.require('./ControllerPointer.sol')
 
 let gasPrice = 1000000000 // 1GWEI
 
 let _ = '        '
 
-contract('Erc20Main', async function(accounts) {
-  let erc20Main
+contract('ControllerPointer', async function(accounts) {
+  let controllerPointer
 
   before(done => {
     ;(async () => {
       try {
         var totalGas = new web3.BigNumber(0)
 
-        // Deploy Erc20Main.sol
-        erc20Main = await Erc20Main.new()
-        var tx = web3.eth.getTransactionReceipt(erc20Main.transactionHash)
+        // Deploy ControllerPointer.sol
+        controllerPointer = await ControllerPointer.new()
+        var tx = web3.eth.getTransactionReceipt(
+          controllerPointer.transactionHash
+        )
         totalGas = totalGas.plus(tx.gasUsed)
-        console.log(_ + tx.gasUsed + ' - Deploy erc20Main')
-        erc20Main = await Erc20Main.deployed()
+        console.log(_ + tx.gasUsed + ' - Deploy controllerPointer')
+        controllerPointer = await ControllerPointer.deployed()
 
         console.log(_ + '-----------------------')
         console.log(_ + totalGas.toFormat(0) + ' - Total Gas')
