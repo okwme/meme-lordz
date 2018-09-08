@@ -69,8 +69,6 @@ contract ERC20Main is StandardToken {
         emit Inited(_memehash);
     }
 
-
-
     /// @dev                Mint new tokens with ether
     /// @param numTokens    The number of tokens you want to mint
     function mint(address minter, uint256 numTokens) public onlyController returns(bool){
