@@ -1,7 +1,7 @@
 {
   "ProxyFactory": {
     "networks": {
-      "42": "0x98b35d85d5bc3687a5fe12381978539d44b2f228"
+      "42": "0x19d6bd51cf889abd63e0a11863ad2ae7df9d1089"
     },
     "abi": [
       {
