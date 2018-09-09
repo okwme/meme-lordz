@@ -23,7 +23,7 @@ contract ERC20Main is StandardToken {
     }
 
     modifier onlyController() {
-        require(msg.sender == ControllerPointer(0xb4842E1BAAD02339F793B5f62DE7C56a5d2ac561).getController());
+        require(msg.sender == ControllerPointer(0x57f9ad5d48c50646c19c570bf9b7d1cea1751f58).getController());
         _;
     }
 
@@ -57,7 +57,7 @@ contract ERC20Main is StandardToken {
         memehash.memehash = _memehash;
 
         require(
-            ControllerI(ControllerPointer(0xb4842E1BAAD02339F793B5f62DE7C56a5d2ac561).getController()).initMeme.value(msg.value)(
+            ControllerI(ControllerPointer(0x57f9ad5d48c50646c19c570bf9b7d1cea1751f58).getController()).initMeme.value(msg.value)(
                 tx.origin,
                 _name,
                 _symbol,

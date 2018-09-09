@@ -5,7 +5,7 @@ let _ = '        '
 
 module.exports = (deployer, helper, accounts) => {
   deployer.then(async () => {
-    // return
+    return
     try {
       const controllerPointer = await ControllerPointer.deployed()
       console.log(
