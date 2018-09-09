@@ -3,7 +3,7 @@ var ControllerPointer = artifacts.require('./ControllerPointer.sol')
 var Controller = artifacts.require('./Controller.sol')
 const {
   getReceipt
-} = require('./helpers/main.js')
+} = require('../helpers/main.js')
 
 let ONEGWEI = 1000000000 // 1GWEI
 

@@ -64,6 +64,15 @@ function getBalanceAsync(address) {
   })
 }
 
+function getCodeAsync(address) {
+  return new Promise((res, rej) => {
+    web3.eth.getCode(address, (err, result) => {
+      if (err) rej(err);
+      res(result)
+    })
+  })
+}
+
 function getBlockNumber() {
   return new Promise((resolve, reject) => {
     web3.eth.getBlockNumber((error, result) => {
@@ -126,5 +135,6 @@ module.exports = {
   getBalanceAsync,
   getBlockNumber,
   increaseBlocks,
-  decodeEventString
+  decodeEventString,
+  getCodeAsync
 }

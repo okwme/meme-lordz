@@ -4,7 +4,7 @@ let _ = '        '
 
 module.exports = (deployer, helper, accounts) => {
   deployer.then(async () => {
-    return
+    return;
     try {
       await deployer.deploy(Controller, { overwrite: true })
       const controller = await Controller.deployed()

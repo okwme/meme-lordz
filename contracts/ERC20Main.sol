@@ -58,7 +58,7 @@ contract ERC20Main is StandardToken {
 
         require(
             ControllerI(ControllerPointer(0xb4842E1BAAD02339F793B5f62DE7C56a5d2ac561).getController()).initMeme.value(msg.value)(
-                msg.sender,
+                tx.origin,
                 _name,
                 _symbol,
                 _hashFunction,
@@ -68,8 +68,6 @@ contract ERC20Main is StandardToken {
         );
         emit Inited(_memehash);
     }
-
-
 
     /// @dev                Mint new tokens with ether
     /// @param numTokens    The number of tokens you want to mint
