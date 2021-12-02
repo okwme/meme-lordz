@@ -1,4 +1,6 @@
-import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
+pragma solidity ^0.4.24;
+
+import "zeppelin-solidity/contracts/ownership/Ownable.sol";
 
 contract ControllerPointer is Ownable {
     address controller;
@@ -9,13 +11,13 @@ contract ControllerPointer is Ownable {
         owner = msg.sender;
         setController(_controller);
     }
-    function getController() public constant returns(address) {
+    function getController() public view returns(address) {
         return controller;
     }
     function setController(address _controller) public onlyOwner {
         controller = _controller;
     }
-    function getERC20Main() public constant returns(address) {
+    function getERC20Main() public view returns(address) {
         return ERC20Main;
     }
     function setERC20Main(address _erc20Main) public onlyOwner {

@@ -28,9 +28,9 @@
 *
 ***/
 
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.24;
 
-import './ControllerPointer.sol';
+import "./ControllerPointer.sol";
 
 /* solhint-disable no-inline-assembly, indent, state-visibility, avoid-low-level-calls */
 

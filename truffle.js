@@ -1,7 +1,19 @@
 require('dotenv').config()
 const HDWalletProvider = require('truffle-hdwallet-provider')
-
+console.log('truffle.js')
 module.exports = {
+  compilers: {
+    solc: {
+      version: "0.4.24",
+      parser: "solcjs",
+      settings: {
+        optimizer: {
+          enabled: true,
+          runs: 2000000
+        }
+      }
+    }
+  },
   networks: {
     develop: {
       provider() {
@@ -46,6 +58,19 @@ module.exports = {
         )
       },
       network_id: 4
+      // gas: 4700000,
+      // gasPrice: 20000000000
+    },
+    evmos: {
+      provider() {
+        return new HDWalletProvider(
+          process.env.ETHERMINT_KEY,
+          // 'https://ethereum.rpc.evmos.dev'
+          'http://104.154.133.55:8545'
+          // 'https://evmos-evm-rpc.tk/'
+        )
+      },
+      network_id: 9000
       // gas: 4700000,
       // gasPrice: 20000000000
     },

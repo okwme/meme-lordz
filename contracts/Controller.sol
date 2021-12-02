@@ -1,3 +1,5 @@
+pragma solidity ^0.4.24;
+
 import "./ControllerI.sol";
 import "./ERC20MainI.sol";
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
@@ -24,7 +26,7 @@ contract Controller is ControllerI, BancorFormula {
     }
 
 
-    function getBuy(uint256 totalSupply, uint256 poolBalance, uint256 buyValue) public constant returns(uint256) {
+    function getBuy(uint256 totalSupply, uint256 poolBalance, uint256 buyValue) public view returns(uint256) {
         return calculatePurchaseReturn(
             safeAdd(totalSupply, virtualSupply),
             safeAdd(poolBalance, virtualBalance),
@@ -33,7 +35,7 @@ contract Controller is ControllerI, BancorFormula {
     }
 
 
-    function getSell(uint256 totalSupply, uint256 poolBalance, uint256 sellAmount) public constant returns(uint256) {
+    function getSell(uint256 totalSupply, uint256 poolBalance, uint256 sellAmount) public view returns(uint256) {
         return calculateSaleReturn(
             safeAdd(totalSupply, virtualSupply),
             safeAdd(poolBalance, virtualBalance),

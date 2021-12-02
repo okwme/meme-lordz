@@ -1,3 +1,5 @@
+pragma solidity ^0.4.24;
+
 contract ERC20MainI {
     function poolBalance() public view returns (uint256);
     function totalSupply() public view returns (uint256);

@@ -13,4 +13,3 @@ installed_contracts
 .DS_Store
 
 .env
-build/*

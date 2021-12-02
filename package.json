@@ -14,7 +14,8 @@
     "test": "test"
   },
   "dependencies": {
-    "bancor-contracts": "https://github.com/bancorprotocol/contracts.git"
+    "bancor-contracts": "https://github.com/bancorprotocol/contracts.git#v0.4.2",
+    "truffle": "^4.0.0"
   },
   "devDependencies": {
     "dotenv": "^5.0.1",

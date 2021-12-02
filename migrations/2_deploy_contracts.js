@@ -2,7 +2,7 @@ var ProxyFactory = artifacts.require('./ProxyFactory.sol')
 var Controller = artifacts.require('./Controller.sol')
 var ControllerPointer = artifacts.require('./ControllerPointer.sol')
 let _ = '        '
-
+console.log('2_migration.js')
 var {
   reserveRatio,
   virtualBalance,

@@ -1,3 +1,5 @@
+pragma solidity ^0.4.24;
+
 import "zeppelin-solidity/contracts/token/ERC20/StandardToken.sol";
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
 import "./ControllerI.sol";
@@ -33,7 +35,7 @@ contract ERC20Main is StandardToken {
 
     using SafeMath for uint256;
 
-    function() payable {}
+    function() payable  public {}
 
     function initMeme(
         string _name,

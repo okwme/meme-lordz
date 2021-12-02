@@ -1,6 +1,6 @@
 var Erc20Main = artifacts.require('./ERC20Main.sol')
 let _ = '        '
-
+console.log('3_migration.js')
 module.exports = (deployer, helper, accounts) => {
   deployer.then(async () => {
     try {

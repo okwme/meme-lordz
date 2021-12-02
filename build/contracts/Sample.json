@@ -1,0 +1,180 @@
+{
+  "contractName": "Sample",
+  "abi": [
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    }
+  ],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a7230582071a517a1a198b70fdad230d4fe0b2d6a228bb94e1cf5ca0d7d9a9acd0d6c2eb60029",
+  "deployedBytecode": "0x6080604052600080fd00a165627a7a7230582071a517a1a198b70fdad230d4fe0b2d6a228bb94e1cf5ca0d7d9a9acd0d6c2eb60029",
+  "sourceMap": "79:50:7:-;;;101:24;8:9:-1;5:2;;;30:1;27;20:12;5:2;101:24:7;79:50;;;;;;",
+  "deployedSourceMap": "79:50:7:-;;;;;",
+  "source": "pragma solidity ^0.4.24;\n\n/**\n * The Sample contract does this and that...\n */\ncontract Sample {\n    constructor () public {}  \n}\n",
+  "sourcePath": "/Users/billy/GitHub/memelordz/meme-lordz/contracts/Sample.sol",
+  "ast": {
+    "absolutePath": "/Users/billy/GitHub/memelordz/meme-lordz/contracts/Sample.sol",
+    "exportedSymbols": {
+      "Sample": [
+        917
+      ]
+    },
+    "id": 918,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 912,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:7"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "The Sample contract does this and that...",
+        "fullyImplemented": true,
+        "id": 917,
+        "linearizedBaseContracts": [
+          917
+        ],
+        "name": "Sample",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 915,
+              "nodeType": "Block",
+              "src": "123:2:7",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 916,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 913,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "113:2:7"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 914,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "123:0:7"
+            },
+            "scope": 917,
+            "src": "101:24:7",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 918,
+        "src": "79:50:7"
+      }
+    ],
+    "src": "0:130:7"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/billy/GitHub/memelordz/meme-lordz/contracts/Sample.sol",
+    "exportedSymbols": {
+      "Sample": [
+        917
+      ]
+    },
+    "id": 918,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 912,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:7"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "The Sample contract does this and that...",
+        "fullyImplemented": true,
+        "id": 917,
+        "linearizedBaseContracts": [
+          917
+        ],
+        "name": "Sample",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 915,
+              "nodeType": "Block",
+              "src": "123:2:7",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 916,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 913,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "113:2:7"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 914,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "123:0:7"
+            },
+            "scope": 917,
+            "src": "101:24:7",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 918,
+        "src": "79:50:7"
+      }
+    ],
+    "src": "0:130:7"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.0",
+  "updatedAt": "2021-12-02T16:18:46.488Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
